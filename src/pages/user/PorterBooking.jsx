@@ -55,8 +55,6 @@ export default function PorterBooking() {
         wheelchairs: updatedServiceType === "Luggage Service" ? 0 : prev.wheelchairs || 1,
       }));
     }
-    // Only synchronize from initial route state/query.
-    // Do not re-apply when the user changes the selected service manually.
   }, [location.state?.serviceType, serviceTypeFromQuery]);
 
   const handleChange = (e) => {
@@ -166,6 +164,7 @@ export default function PorterBooking() {
       </section>
 
       <section className="max-w-7xl mx-auto py-14 px-6">
+        {/* Service Cards Row */}
         <div className="grid gap-6 md:grid-cols-3 mb-10">
           {serviceOptions.map((service) => {
             const selected = form.serviceType === service.label;
@@ -210,6 +209,7 @@ export default function PorterBooking() {
           })}
         </div>
 
+        {/* Progress Stepper Tracking Panel */}
         <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm mb-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
             <div className="space-y-3">
@@ -239,6 +239,7 @@ export default function PorterBooking() {
           </div>
         </div>
 
+        {/* Form Container Panel */}
         <div className="bg-white rounded-[32px] border border-slate-200 shadow-lg p-10">
           <div className="mb-10 text-center">
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-500 mb-3">
@@ -255,183 +256,192 @@ export default function PorterBooking() {
             </div>
           )}
 
-          <form onSubmit={handleBooking} className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Passenger Name
-                </label>
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder="Enter passenger's full name"
-                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Mobile Number
-                </label>
-                <input
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                  placeholder="+91 00000 00000"
-                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Pickup Address / Location
-                </label>
-                <input
-                  name="pickupAddress"
-                  value={form.pickupAddress}
-                  onChange={handleChange}
-                  placeholder="e.g., Gate 1, Parking Zone A"
-                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Drop Address / Location
-                </label>
-                <input
-                  name="dropAddress"
-                  value={form.dropAddress}
-                  onChange={handleChange}
-                  placeholder="e.g., Coach B2, Seat 45"
-                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
+          {/* Form Content Wrapper */}
+          <form onSubmit={handleBooking} className="space-y-8">
+            {/* Split Columns Grid with Height Tightening Properties */}
+            <div className="flex flex-col md:flex-row items-start gap-8">
+              
+              {/* Left Column Container: Handles Personal Info Blocks */}
+              <div className="w-full md:w-1/2 space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Coach Number
+                    Passenger Name
                   </label>
                   <input
-                    name="coachNumber"
-                    value={form.coachNumber}
+                    name="name"
+                    value={form.name}
                     onChange={handleChange}
-                    placeholder="e.g. B2"
+                    placeholder="Enter passenger's full name"
                     className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
                     required
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Seat Number
+                    Mobile Number
                   </label>
                   <input
-                    name="seatNumber"
-                    value={form.seatNumber}
+                    name="phone"
+                    value={form.phone}
                     onChange={handleChange}
-                    placeholder="e.g. 45"
+                    placeholder="Enter 10-digit mobile number"
+                    className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Pickup Address / Location
+                  </label>
+                  <input
+                    name="pickupAddress"
+                    value={form.pickupAddress}
+                    onChange={handleChange}
+                    placeholder="e.g., Gate 1, Parking Zone A"
+                    className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Drop Address / Location
+                  </label>
+                  <input
+                    name="dropAddress"
+                    value={form.dropAddress}
+                    onChange={handleChange}
+                    placeholder="e.g., Platform 4, Coach B2"
                     className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
                     required
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-6 items-end">
-                {(form.serviceType === "Luggage Service" || form.serviceType === "Combined Service") && (
+              {/* Right Column Container: Handles Dynamic Counters and Dropdowns with h-fit */}
+              <div className="w-full md:w-1/2 space-y-6 h-fit">
+                <div className="grid grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Number of Luggage Bags
+                      Coach Number
                     </label>
-                    <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3">
-                      <button
-                        type="button"
-                        onClick={() => setForm((prev) => ({ ...prev, bags: Math.max(1, prev.bags - 1) }))}
-                        className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
-                      >
-                        -
-                      </button>
-                      <span className="flex-1 text-center text-base font-semibold text-slate-900">
-                        {form.bags}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setForm((prev) => ({ ...prev, bags: prev.bags + 1 }))}
-                        className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
-                      >
-                        +
-                      </button>
-                    </div>
+                    <input
+                      name="coachNumber"
+                      value={form.coachNumber}
+                      onChange={handleChange}
+                      placeholder="e.g. B2"
+                      className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
+                      required
+                    />
                   </div>
-                )}
-
-                {(form.serviceType === "Wheelchair Service" || form.serviceType === "Combined Service") && (
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Number of Wheelchairs
+                      Seat Number
                     </label>
-                    <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3">
-                      <button
-                        type="button"
-                        onClick={() => setForm((prev) => ({ ...prev, wheelchairs: Math.max(1, prev.wheelchairs - 1) }))}
-                        className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
-                      >
-                        -
-                      </button>
-                      <span className="flex-1 text-center text-base font-semibold text-slate-900">
-                        {form.wheelchairs}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setForm((prev) => ({ ...prev, wheelchairs: prev.wheelchairs + 1 }))}
-                        className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
-                      >
-                        +
-                      </button>
-                    </div>
+                    <input
+                      name="seatNumber"
+                      value={form.seatNumber}
+                      onChange={handleChange}
+                      placeholder="e.g. 45"
+                      className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
+                      required
+                    />
                   </div>
-                )}
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Service Type
-                  </label>
-                  <select
-                    name="serviceType"
-                    value={form.serviceType}
-                    onChange={handleChange}
-                    className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
-                  >
-                    <option value="Luggage Service">Luggage Service</option>
-                    <option value="Wheelchair Service">Wheelchair Service</option>
-                    <option value="Combined Service">Combined Service</option>
-                  </select>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Additional Instructions
-                </label>
-                <textarea
-                  name="notes"
-                  value={form.notes}
-                  onChange={handleChange}
-                  rows="5"
-                  placeholder="Any specific requirements, fragile items, or landmark details..."
-                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
-                />
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 items-end">
+                  {(form.serviceType === "Luggage Service" || form.serviceType === "Combined Service") && (
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Number of Luggage Bags
+                      </label>
+                      <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <button
+                          type="button"
+                          onClick={() => setForm((prev) => ({ ...prev, bags: Math.max(1, prev.bags - 1) }))}
+                          className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
+                        >
+                          -
+                        </button>
+                        <span className="flex-1 text-center text-base font-semibold text-slate-900">
+                          {form.bags}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setForm((prev) => ({ ...prev, bags: prev.bags + 1 }))}
+                          className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {(form.serviceType === "Wheelchair Service" || form.serviceType === "Combined Service") && (
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Number of Wheelchairs
+                      </label>
+                      <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <button
+                          type="button"
+                          onClick={() => setForm((prev) => ({ ...prev, wheelchairs: Math.max(1, prev.wheelchairs - 1) }))}
+                          className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
+                        >
+                          -
+                        </button>
+                        <span className="flex-1 text-center text-base font-semibold text-slate-900">
+                          {form.wheelchairs}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setForm((prev) => ({ ...prev, wheelchairs: prev.wheelchairs + 1 }))}
+                          className="h-10 w-10 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={form.serviceType === "Combined Service" ? "sm:col-span-2" : "w-full"}>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Service Type
+                    </label>
+                    <select
+                      name="serviceType"
+                      value={form.serviceType}
+                      onChange={handleChange}
+                      className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
+                    >
+                      <option value="Luggage Service">Luggage Service</option>
+                      <option value="Wheelchair Service">Wheelchair Service</option>
+                      <option value="Combined Service">Combined Service</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="md:col-span-2">
+            {/* Additional Instructions Content Wrapper: Pulls completely out of columns to flow cleanly */}
+            <div className="w-full">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Additional Instructions
+              </label>
+              <textarea
+                name="notes"
+                value={form.notes}
+                onChange={handleChange}
+                rows="4"
+                placeholder="Any specific requirements, fragile items, or landmark details..."
+                className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-100"
+              />
+            </div>
+
+            {/* Action Checkout button */}
+            <div className="w-full pt-2">
               <button
                 type="submit"
                 className="w-full rounded-3xl bg-blue-900 px-8 py-5 text-lg font-semibold text-white shadow-lg transition hover:bg-blue-800"
